@@ -94,6 +94,10 @@ func (fs LocalFs) IsExists(name string) bool {
 	return true
 }
 
+func NewLocalFolder(path string) Folder {
+	return &LocalFs{Path: path}
+}
+
 func suffixSlash(path string) string {
 	if !strings.HasSuffix(path, "/") {
 		path = path + "/"
