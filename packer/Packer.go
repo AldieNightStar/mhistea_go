@@ -24,6 +24,9 @@ func Pack(template, scriptBundle string) (out string, err error) {
 	return template, nil
 }
 
+//	Packs bundles into <html> file by given template
+//	It will replace <!-- script --> to bundles in arguments
+//	Will save result to the file
 func PackAndSave(writer FileWriter, fileName, template, scriptBundle string) error {
 	packed, err := Pack(template, scriptBundle)
 	if err != nil {

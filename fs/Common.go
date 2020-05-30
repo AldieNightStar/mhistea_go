@@ -24,7 +24,7 @@ type Folder interface {
 	IsExists(name string) bool
 }
 
-type FolderInfo struct {
-	Name   string
-	IsFile bool
+type FolderInfo interface {
+	Name() string
+	IsFile() bool
 }

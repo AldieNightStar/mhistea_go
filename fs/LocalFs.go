@@ -18,10 +18,7 @@ func (fs LocalFs) List() []FolderInfo {
 	var list []FolderInfo
 	for i := 0; i < len(files); i++ {
 		file := files[i]
-		info := FolderInfo{
-			file.Name(),
-			!file.IsDir(),
-		}
+		info := NewFolderInfo(file.Name(), !file.IsDir())
 		list = append(list, info)
 	}
 	return list

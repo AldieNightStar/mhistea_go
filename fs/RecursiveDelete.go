@@ -15,7 +15,7 @@ func RecursiveDelete(fs Folder, name string) bool {
 	}
 	list := folder.List()
 	for _, info := range list {
-		status := RecursiveDelete(folder, info.Name)
+		status := RecursiveDelete(folder, info.Name())
 		if !status {
 			return false
 		}
