@@ -2,12 +2,14 @@ package sections
 
 import "testing"
 
-const TEXT = ":: Home" +
-	"\nThis is home!" +
-	"\nHaxiDenti programmer" +
-	"\n:: Outdoor" +
-	"\nThis is outdoor!" +
-	"\nMonna Histea"
+const TEXT = "This is default text\n" +
+	"And this is too!\n" +
+	":: Home\n" +
+	"This is home!\n" +
+	"HaxiDenti programmer\n" +
+	":: Outdoor\n" +
+	"This is outdoor!\n" +
+	"Monna Histea"
 
 func TestGetSections(t *testing.T) {
 	sections := GetSections(TEXT)
@@ -20,14 +22,14 @@ func TestGetSections(t *testing.T) {
 		t.Fail()
 		return
 	}
-	if sections[0].LineNumber != 0 || sections[1].LineNumber != 3 {
+	if sections[0].LineNumber != 2 || sections[1].LineNumber != 5 {
 		t.Fail()
 		return
 	}
 }
 
 func TestSplitToLines(t *testing.T) {
-	text := "This\nText\nIs\nSplitted"
+	const text = "This\nText\nIs\nSplitted"
 	lines := SplitToLines(text)
 	if len(lines) != 4 {
 		t.Fail()
@@ -48,6 +50,24 @@ func TestReadSectionByName(t *testing.T) {
 		return
 	}
 	if outdoor != "This is outdoor!\nMonna Histea\n" {
+		t.Fail()
+		return
+	}
+}
+
+func TestReadDefaultSection(t *testing.T) {
+	def := ReadDefaultSection(TEXT)
+	const expected = "This is default text\nAnd this is too!"
+
+	if len(def) == 0 {
+		t.Fail()
+		return
+	}
+	if def != expected {
+		t.Fail()
+		return
+	}
+	if len(ReadDefaultSection(":: XXX")) > 0 {
 		t.Fail()
 		return
 	}

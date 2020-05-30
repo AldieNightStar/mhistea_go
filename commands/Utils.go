@@ -1,6 +1,8 @@
 package commands
 
-func AddCommandWithSynonyms(registry CommandRegistry, synonyms []string, moduleName, alias string) {
+import "github.com/AldieNightStar/mhistea_go/common"
+
+func AddCommandWithSynonyms(registry common.CommandRegistry, synonyms []string, moduleName, alias string) {
 	if len(synonyms) == 0 {
 		return
 	}

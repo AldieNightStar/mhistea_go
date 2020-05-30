@@ -1,6 +1,9 @@
 package commands
 
-import "errors"
+import (
+	"errors"
+	"github.com/AldieNightStar/mhistea_go/common"
+)
 
 type CommandInfo struct {
 	Alias, Module string
@@ -10,7 +13,7 @@ type Commands struct {
 	m map[string]CommandInfo
 }
 
-func NewCommandRegistry() CommandRegistry {
+func NewCommandRegistry() common.CommandRegistry {
 	return &Commands{
 		m: make(map[string]CommandInfo),
 	}

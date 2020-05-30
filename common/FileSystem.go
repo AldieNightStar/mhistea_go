@@ -1,12 +1,25 @@
-package fs
+package common
 
-type Folder interface {
-	// List of files and folders
-	List() []FolderInfo
+type FileReader interface {
 	// Read file
 	ReadFile(name string) []byte
+}
+
+type FileWriter interface {
 	// Write File (Rewrite if exists)
 	WriteFile(name string, data []byte) bool
+}
+
+type FileLister interface {
+	// List of files and folders
+	List() []FolderInfo
+}
+
+type Folder interface {
+	FileReader
+	FileWriter
+	FileLister
+
 	// Get Folder
 	// Returns same structure of Folder or nil if there is no such
 	GetFolder(name string) Folder

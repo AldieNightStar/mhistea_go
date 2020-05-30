@@ -1,6 +1,9 @@
 package config
 
-import "strings"
+import (
+	"github.com/AldieNightStar/mhistea_go/common"
+	"strings"
+)
 
 //	Configuration
 //		cfg := ReadConfig(fileReader, sectionReader, "config.txt")
@@ -17,7 +20,7 @@ func (c Config) Get(section, key string) (value string) {
 //	Returns Configuration
 //		cfg := ReadConfig(fileReader, sectionReader, "config.txt")
 //		cfg.Get("section_a", "name") // etc
-func ReadConfig(fileReader FileReader, sectionReader SectionReader, fileName string) Configuration {
+func ReadConfig(fileReader common.FileReader, sectionReader common.FileSection, fileName string) common.SectionalConfiguration {
 	data := fileReader.ReadFile(fileName)
 	if data == nil || len(data) == 0 {
 		return nil

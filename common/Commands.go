@@ -1,4 +1,4 @@
-package commands
+package common
 
 type CommandRegistry interface {
 	AddCommand(commandName, moduleName, alias string) error

@@ -76,3 +76,19 @@ func SplitToLines(text string) (lines []string) {
 	}
 	return strings.Split(text, "\n")
 }
+
+func ReadDefaultSection(text string) string {
+	lines := SplitToLines(text)
+	sb := strings.Builder{}
+
+	for _, line := range lines {
+		if strings.HasPrefix(line, SECTION_PREFIX) {
+			break
+		}
+		if sb.Len() > 0 {
+			sb.WriteString("\n")
+		}
+		sb.WriteString(line)
+	}
+	return sb.String()
+}
