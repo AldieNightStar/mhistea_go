@@ -1,4 +1,4 @@
-package section_reader
+package sections
 
 type SectionReaderObject struct{}
 

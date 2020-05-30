@@ -1,4 +1,4 @@
-package section_reader
+package sections
 
 import "strings"
 
