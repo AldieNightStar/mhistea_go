@@ -11,6 +11,9 @@ const NOT_FOUND = -1
 const SECTION_PREFIX = "::"
 
 func ReadSectionByName(text, sectionName string) (out string) {
+	if strings.Contains(text, "\r") {
+		text = strings.ReplaceAll(text, "\r", "")
+	}
 	sections := GetSections(text)
 	if len(sections) == 0 {
 		return ""
@@ -42,6 +45,9 @@ func GetSections(text string) (sections []SectionInfo) {
 	sections = []SectionInfo{}
 	if text == "" {
 		return sections
+	}
+	if strings.Contains(text, "\r") {
+		text = strings.ReplaceAll(text, "\r", "")
 	}
 	if !strings.Contains(text, "\n") {
 		return sections
