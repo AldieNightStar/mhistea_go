@@ -2,6 +2,10 @@ package sections
 
 type SectionReaderObject struct{}
 
+func NewSectionReader() SectionReaderObject {
+	return SectionReaderObject{}
+}
+
 func (s SectionReaderObject) GetSectionList(text string) []string {
 	var list []string
 	sections := GetSections(text)

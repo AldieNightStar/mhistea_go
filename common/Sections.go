@@ -1,6 +1,6 @@
 package common
 
-type FileSection interface {
+type SectionReader interface {
 	GetSectionList(text string) []string
 	GetSectionByName(text, name string) string
 }

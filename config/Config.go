@@ -20,12 +20,21 @@ func (c Config) Get(section, key string) (value string) {
 //	Returns Configuration
 //		cfg := ReadConfig(fileReader, sectionReader, "config.txt")
 //		cfg.Get("section_a", "name") // etc
-func ReadConfig(fileReader common.FileReader, sectionReader common.FileSection, fileName string) common.SectionalConfiguration {
+func ReadConfig(fileReader common.FileReader, sectionReader common.SectionReader, fileName string) common.SectionalConfiguration {
 	data := fileReader.ReadFile(fileName)
 	if data == nil || len(data) == 0 {
 		return nil
 	}
 	text := string(data)
+	return ParseConfig(sectionReader, text)
+}
+
+//	Parse configuration text and returns [SectionalConfiguration]
+//	Example:
+//		:: Profile
+//		name = Antonio
+//		age = 25
+func ParseConfig(sectionReader common.SectionReader, text string) common.SectionalConfiguration {
 	sectionList := sectionReader.GetSectionList(text)
 	if len(sectionList) == 0 {
 		return nil
@@ -35,19 +44,13 @@ func ReadConfig(fileReader common.FileReader, sectionReader common.FileSection, 
 	}
 	for _, sectionName := range sectionList {
 		sectionText := sectionReader.GetSectionByName(text, sectionName)
-		sectionConfig := ParseConfig(sectionText)
+		sectionConfig := parseConfigSection(sectionText)
 		config.m[sectionName] = sectionConfig
 	}
 	return config
 }
 
-//	Parse configuration text
-//	Example:
-//		name = Antonio
-//		age = 25
-//	Will not parse ::sections
-//	Good to use for each ::section to have MultiConfig
-func ParseConfig(text string) map[string]string {
+func parseConfigSection(text string) map[string]string {
 	if text == "" {
 		return nil
 	}

@@ -15,14 +15,23 @@ type FileLister interface {
 	List() []FolderInfo
 }
 
-type Folder interface {
+type ReadOnlyFolder interface {
 	FileReader
-	FileWriter
 	FileLister
 
 	// Get Folder
 	// Returns same structure of Folder or nil if there is no such
 	GetFolder(name string) Folder
+	// Check isFile
+	IsFile(name string) bool
+	// Check if file exist
+	IsExists(name string) bool
+}
+
+type Folder interface {
+	ReadOnlyFolder
+	FileWriter
+
 	// Delete File
 	DeleteFile(name string) bool
 	// Delete Folder
@@ -31,10 +40,6 @@ type Folder interface {
 	DeleteFolder(name string) bool
 	// Create Folder
 	CreateFolder(name string) bool
-	// Check isFile
-	IsFile(name string) bool
-	// Check if file exist
-	IsExists(name string) bool
 }
 
 type FolderInfo interface {
