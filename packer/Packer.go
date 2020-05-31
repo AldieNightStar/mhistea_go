@@ -8,10 +8,6 @@ import (
 
 const ScriptTag = "<!-- script -->"
 
-const ErrorTemplateEmpty = "Error! Template is empty"
-const ErrorScriptTagNotFound = "Error! <!-- script --> tag is not found!"
-const ErrorWriteFileNotSuccessful = "Error! File writing was not successful!"
-
 //	Packs bundles into <html> file by given template
 //	It will replace <!-- script --> to bundles in arguments
 func Pack(template, scriptBundle string) (out string, err error) {
