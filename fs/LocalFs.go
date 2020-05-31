@@ -7,11 +7,11 @@ import (
 	"strings"
 )
 
-type LocalFs struct {
+type localFs struct {
 	Path string
 }
 
-func (fs LocalFs) List() []_common.FolderInfo {
+func (fs localFs) List() []_common.FolderInfo {
 	files, err := ioutil.ReadDir(fs.Path)
 	if err != nil {
 		return nil
@@ -25,7 +25,7 @@ func (fs LocalFs) List() []_common.FolderInfo {
 	return list
 }
 
-func (fs LocalFs) ReadFile(name string) []byte {
+func (fs localFs) ReadFile(name string) []byte {
 	path := suffixSlash(fs.Path)
 	data, err := ioutil.ReadFile(path + name)
 	if err != nil {
@@ -34,7 +34,7 @@ func (fs LocalFs) ReadFile(name string) []byte {
 	return data
 }
 
-func (fs LocalFs) WriteFile(name string, data []byte) bool {
+func (fs localFs) WriteFile(name string, data []byte) bool {
 	path := suffixSlash(fs.Path)
 	err := ioutil.WriteFile(path+name, data, 0)
 	if err != nil {
@@ -43,19 +43,19 @@ func (fs LocalFs) WriteFile(name string, data []byte) bool {
 	return true
 }
 
-func (fs LocalFs) GetFolder(name string) _common.Folder {
+func (fs localFs) GetFolder(name string) _common.Folder {
 	nextPath := suffixSlash(fs.Path) + name
 	_, err := ioutil.ReadDir(nextPath)
 	if err != nil {
 		return nil
 	}
-	newFolder := &LocalFs{
+	newFolder := &localFs{
 		Path: nextPath,
 	}
 	return newFolder
 }
 
-func (fs LocalFs) IsFile(name string) bool {
+func (fs localFs) IsFile(name string) bool {
 	info, err := os.Stat(suffixSlash(fs.Path) + name)
 	if err != nil {
 		return false
@@ -63,7 +63,7 @@ func (fs LocalFs) IsFile(name string) bool {
 	return !info.IsDir()
 }
 
-func (fs LocalFs) DeleteFile(name string) bool {
+func (fs localFs) DeleteFile(name string) bool {
 	filePath := suffixSlash(fs.Path) + name
 	err := os.Remove(filePath)
 	if err != nil {
@@ -72,11 +72,11 @@ func (fs LocalFs) DeleteFile(name string) bool {
 	return true
 }
 
-func (fs LocalFs) DeleteFolder(name string) bool {
+func (fs localFs) DeleteFolder(name string) bool {
 	return fs.DeleteFile(name)
 }
 
-func (fs LocalFs) CreateFolder(name string) bool {
+func (fs localFs) CreateFolder(name string) bool {
 	err := os.Mkdir(name, 0)
 	if err != nil {
 		return false
@@ -84,7 +84,7 @@ func (fs LocalFs) CreateFolder(name string) bool {
 	return true
 }
 
-func (fs LocalFs) IsExists(name string) bool {
+func (fs localFs) IsExists(name string) bool {
 	_, err := os.Stat(suffixSlash(fs.Path) + name)
 	if os.IsNotExist(err) {
 		return false
@@ -93,7 +93,7 @@ func (fs LocalFs) IsExists(name string) bool {
 }
 
 func NewLocalFolder(path string) _common.Folder {
-	return &LocalFs{Path: path}
+	return &localFs{Path: path}
 }
 
 func suffixSlash(path string) string {

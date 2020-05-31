@@ -9,9 +9,9 @@ import (
 func main() {
 	_init.Init()
 
-	tfolder := fs.LocalFs{Path: "D:\\LotImages\\templates"}
-	mfolder := fs.LocalFs{Path: "D:\\LotImages\\mods"}
-	sfolder := fs.LocalFs{Path: "D:\\LotImages\\story"}
+	tfolder := fs.NewLocalFolder("D:\\LotImages\\templates")
+	mfolder := fs.NewLocalFolder("D:\\LotImages\\mods")
+	sfolder := fs.NewLocalFolder("D:\\LotImages\\story")
 
 	err := compiler.CompileStory(tfolder, mfolder, sfolder)
 	if err != nil {
