@@ -2,11 +2,11 @@ package module
 
 import (
 	"errors"
-	"github.com/AldieNightStar/mhistea_go/common"
+	"github.com/AldieNightStar/mhistea_go/_common"
 )
 
 type modImpl struct {
-	folder common.ReadOnlyFolder
+	folder _common.ReadOnlyFolder
 	name   string
 }
 
@@ -22,7 +22,7 @@ func (m modImpl) Config() string {
 	return string(m.folder.ReadFile("config.txt"))
 }
 
-func NewModule(name string, folder common.Folder) (mod common.Module, err error) {
+func NewModule(folder _common.Folder, name string) (mod _common.Module, err error) {
 	if !folder.IsExists("mod.js") {
 		return nil, errors.New("mod.js is not present!")
 	}

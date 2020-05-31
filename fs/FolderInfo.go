@@ -1,13 +1,13 @@
 package fs
 
-import "github.com/AldieNightStar/mhistea_go/common"
+import "github.com/AldieNightStar/mhistea_go/_common"
 
 type FolderInfoImp struct {
 	name   string
 	isFile bool
 }
 
-func NewFolderInfo(name string, isFile bool) common.FolderInfo {
+func NewFolderInfo(name string, isFile bool) _common.FolderInfo {
 	return &FolderInfoImp{
 		name:   name,
 		isFile: isFile,

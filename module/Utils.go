@@ -1,13 +1,46 @@
 package module
 
-import "github.com/AldieNightStar/mhistea_go/common"
+import "github.com/AldieNightStar/mhistea_go/_common"
 
-func ReadConfig(mod common.Module, cfgParser common.ConfigParser, sReader common.SectionReader) common.SectionalConfiguration {
+// Read module configuration file as [SectionalConfiguration] object
+func ReadConfig(mod _common.Module) _common.SectionalConfiguration {
 	cfgText := mod.Config()
-	return cfgParser(sReader, cfgText)
+	parseConfig := _common.Refs.Config.ParseConfig
+	if parseConfig == nil {
+		return nil
+	}
+	return parseConfig(cfgText)
 }
 
-func ReadWrappedScript(mod common.Module, parse common.ParseTemplate) string {
+func ReadWrappedScript(mod _common.Module) string {
+	parseTemplate := _common.Refs.Parser.ParseTemplate
+	if parseTemplate == nil {
+		return ""
+	}
 	script := mod.Script()
-	return parse(wrappedModScript, []string{mod.Name(), script})
+	return parseTemplate(wrappedModScript, []string{mod.Name(), script})
+}
+
+func ReadCommands(mod _common.Module) []_common.CommandInfo {
+	parseConfig := _common.Refs.Config.ParseConfig
+	if parseConfig == nil {
+		return nil
+	}
+	cfgText := mod.Config()
+	cfg := parseConfig(cfgText)
+
+	commandKeys := cfg.Keys("commands")
+	if commandKeys == nil {
+		return nil
+	}
+	var list []_common.CommandInfo
+	for _, cmdKey := range commandKeys {
+		alias := cfg.Get("commands", cmdKey)
+		list = append(list, _common.CommandInfo{
+			Name:   cmdKey,
+			Alias:  alias,
+			Module: mod.Name(),
+		})
+	}
+	return list
 }

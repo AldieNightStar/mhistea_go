@@ -1,12 +1,14 @@
 package sections
 
-type SectionReaderObject struct{}
+import "github.com/AldieNightStar/mhistea_go/_common"
 
-func NewSectionReader() SectionReaderObject {
-	return SectionReaderObject{}
+type sectionReaderObject struct{}
+
+func NewSectionReader() _common.SectionReader {
+	return sectionReaderObject{}
 }
 
-func (s SectionReaderObject) GetSectionList(text string) []string {
+func (s sectionReaderObject) GetSectionList(text string) []string {
 	var list []string
 	sections := GetSections(text)
 	for _, section := range sections {
@@ -15,6 +17,6 @@ func (s SectionReaderObject) GetSectionList(text string) []string {
 	return list
 }
 
-func (s SectionReaderObject) GetSectionByName(text, name string) string {
+func (s sectionReaderObject) GetSectionByName(text, name string) string {
 	return ReadSectionByName(text, name)
 }

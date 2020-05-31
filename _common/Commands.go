@@ -1,4 +1,4 @@
-package common
+package _common
 
 type CommandRegistry interface {
 	AddCommand(commandName, moduleName, alias string) error
@@ -6,4 +6,8 @@ type CommandRegistry interface {
 	GetCommandAlias(commandName string) string
 	GetCommandModuleName(commandName string) string
 	CommandList() []string
+}
+
+type CommandInfo struct {
+	Name, Alias, Module string
 }

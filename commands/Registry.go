@@ -2,7 +2,7 @@ package commands
 
 import (
 	"errors"
-	"github.com/AldieNightStar/mhistea_go/common"
+	"github.com/AldieNightStar/mhistea_go/_common"
 )
 
 type CommandInfo struct {
@@ -14,7 +14,7 @@ type Commands struct {
 }
 
 //	Create new command registry
-func NewCommandRegistry() common.CommandRegistry {
+func NewCommandRegistry() _common.CommandRegistry {
 	return &Commands{
 		m: make(map[string]CommandInfo),
 	}

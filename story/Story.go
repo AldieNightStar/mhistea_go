@@ -2,11 +2,11 @@ package story
 
 import (
 	"errors"
-	"github.com/AldieNightStar/mhistea_go/common"
+	"github.com/AldieNightStar/mhistea_go/_common"
 )
 
 type story struct {
-	folder common.ReadOnlyFolder
+	folder _common.ReadOnlyFolder
 }
 
 func (s story) ResourceList() []string {
@@ -40,7 +40,7 @@ func (s story) StoryConfig() string {
 	return string(s.folder.ReadFile("config.txt"))
 }
 
-func NewStory(folder common.ReadOnlyFolder) (common.Story, error) {
+func NewStory(folder _common.ReadOnlyFolder) (_common.Story, error) {
 	if !folder.IsExists("story.txt") {
 		return nil, errors.New("Story have no story.txt file!")
 	}

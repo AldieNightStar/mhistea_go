@@ -1,4 +1,4 @@
-package common
+package _common
 
 type FileReader interface {
 	// Read file

@@ -1,7 +1,7 @@
 package fs
 
 import (
-	"github.com/AldieNightStar/mhistea_go/common"
+	"github.com/AldieNightStar/mhistea_go/_common"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -11,12 +11,12 @@ type LocalFs struct {
 	Path string
 }
 
-func (fs LocalFs) List() []common.FolderInfo {
+func (fs LocalFs) List() []_common.FolderInfo {
 	files, err := ioutil.ReadDir(fs.Path)
 	if err != nil {
 		return nil
 	}
-	var list []common.FolderInfo
+	var list []_common.FolderInfo
 	for i := 0; i < len(files); i++ {
 		file := files[i]
 		info := NewFolderInfo(file.Name(), !file.IsDir())
@@ -43,7 +43,7 @@ func (fs LocalFs) WriteFile(name string, data []byte) bool {
 	return true
 }
 
-func (fs LocalFs) GetFolder(name string) common.Folder {
+func (fs LocalFs) GetFolder(name string) _common.Folder {
 	nextPath := suffixSlash(fs.Path) + name
 	_, err := ioutil.ReadDir(nextPath)
 	if err != nil {
@@ -92,7 +92,7 @@ func (fs LocalFs) IsExists(name string) bool {
 	return true
 }
 
-func NewLocalFolder(path string) common.Folder {
+func NewLocalFolder(path string) _common.Folder {
 	return &LocalFs{Path: path}
 }
 

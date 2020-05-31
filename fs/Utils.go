@@ -1,12 +1,12 @@
 package fs
 
-import "github.com/AldieNightStar/mhistea_go/common"
+import "github.com/AldieNightStar/mhistea_go/_common"
 
-func IsFolderEmpty(folder common.Folder) bool {
+func IsFolderEmpty(folder _common.Folder) bool {
 	return len(folder.List()) == 0
 }
 
-func GetFolderList(folder common.Folder) []string {
+func GetFolderList(folder _common.Folder) []string {
 	var folderList []string
 	fileList := folder.List()
 	for _, info := range fileList {
@@ -17,7 +17,7 @@ func GetFolderList(folder common.Folder) []string {
 	return folderList
 }
 
-func GetFileList(folder common.Folder) []string {
+func GetFileList(folder _common.Folder) []string {
 	var folderList []string
 	fileList := folder.List()
 	for _, info := range fileList {
@@ -30,7 +30,7 @@ func GetFileList(folder common.Folder) []string {
 
 // Recursive delete file or directory.
 // Even if directory is not empty
-func RecursiveDelete(fs common.Folder, name string) bool {
+func RecursiveDelete(fs _common.Folder, name string) bool {
 	if !fs.IsExists(name) {
 		return false
 	}

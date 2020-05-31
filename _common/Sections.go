@@ -1,4 +1,4 @@
-package common
+package _common
 
 type SectionReader interface {
 	GetSectionList(text string) []string

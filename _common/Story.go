@@ -1,4 +1,4 @@
-package common
+package _common
 
 type ResourceableStory interface {
 	ResourceList() []string

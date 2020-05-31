@@ -2,7 +2,7 @@ package packer
 
 import (
 	"errors"
-	"github.com/AldieNightStar/mhistea_go/common"
+	"github.com/AldieNightStar/mhistea_go/_common"
 	"strings"
 )
 
@@ -24,7 +24,7 @@ func Pack(template, scriptBundle string) (out string, err error) {
 //	Packs bundles into <html> file by given template
 //	It will replace <!-- script --> to bundles in arguments
 //	Will save result to the file
-func PackAndSave(writer common.FileWriter, fileName, template, scriptBundle string) error {
+func PackAndSave(writer _common.FileWriter, fileName, template, scriptBundle string) error {
 	packed, err := Pack(template, scriptBundle)
 	if err != nil {
 		return err

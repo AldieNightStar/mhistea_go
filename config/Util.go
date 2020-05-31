@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/AldieNightStar/mhistea_go/common"
+	"github.com/AldieNightStar/mhistea_go/_common"
 	"strings"
 )
 
@@ -9,13 +9,13 @@ import (
 //	Returns Configuration
 //		cfg := ReadConfig(fileReader, sectionReader, "config.txt")
 //		cfg.Get("section_a", "name") // etc
-func ReadConfig(fileReader common.FileReader, sectionReader common.SectionReader, fileName string) common.SectionalConfiguration {
+func ReadConfig(fileReader _common.FileReader, fileName string) _common.SectionalConfiguration {
 	data := fileReader.ReadFile(fileName)
 	if data == nil || len(data) == 0 {
 		return nil
 	}
 	text := string(data)
-	return ParseConfig(sectionReader, text)
+	return ParseConfig(text)
 }
 
 //	Parse configuration text and returns [SectionalConfiguration]
@@ -23,7 +23,11 @@ func ReadConfig(fileReader common.FileReader, sectionReader common.SectionReader
 //		:: Profile
 //		name = Antonio
 //		age = 25
-func ParseConfig(sectionReader common.SectionReader, text string) common.SectionalConfiguration {
+func ParseConfig(text string) _common.SectionalConfiguration {
+	sectionReader := _common.Refs.Sections.SectionReader
+	if sectionReader == nil {
+		return nil
+	}
 	sectionList := sectionReader.GetSectionList(text)
 	if len(sectionList) == 0 {
 		return nil
@@ -52,6 +56,9 @@ func parseConfigSection(text string) map[string]string {
 	lines := strings.Split(text, "\n")
 	for _, line := range lines {
 		key, val := parseLine(line)
+		if key == "" {
+			continue
+		}
 		if strings.Contains(key, ",") {
 			synonyms := parseSynonyms(key)
 			for _, synonym := range synonyms {
@@ -65,6 +72,9 @@ func parseConfigSection(text string) map[string]string {
 }
 
 func parseLine(text string) (key, value string) {
+	if text == "" {
+		return "", ""
+	}
 	if !strings.Contains(text, "=") {
 		return text, "true"
 	}
@@ -76,7 +86,7 @@ func parseLine(text string) (key, value string) {
 
 func parseSynonyms(key string) []string {
 	if key == "" {
-		return nil
+		return []string{}
 	}
 	if !strings.Contains(key, ",") {
 		return []string{key}
