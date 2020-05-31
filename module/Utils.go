@@ -7,7 +7,7 @@ func ReadConfig(mod common.Module, cfgParser common.ConfigParser, sReader common
 	return cfgParser(sReader, cfgText)
 }
 
-func ReadPackedScript(mod common.Module, parse common.ParseTemplate) string {
+func ReadWrappedScript(mod common.Module, parse common.ParseTemplate) string {
 	script := mod.Script()
 	return parse(wrappedModScript, []string{mod.Name(), script})
 }

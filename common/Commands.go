@@ -5,4 +5,5 @@ type CommandRegistry interface {
 	UseCommand(commandName, args string) string
 	GetCommandAlias(commandName string) string
 	GetCommandModuleName(commandName string) string
+	CommandList() []string
 }

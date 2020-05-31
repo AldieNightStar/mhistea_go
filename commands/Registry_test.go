@@ -25,3 +25,19 @@ func TestCommands_UseCommand(t *testing.T) {
 		return
 	}
 }
+
+func TestCommands_CommandList(t *testing.T) {
+	r := NewCommandRegistry()
+	AddCommandWithSynonyms(r, []string{"p", "pr", "print"}, "core", "print")
+
+	list := r.CommandList()
+
+	if len(list) != 3 {
+		t.Fail()
+		return
+	}
+	if list[0] != "p" || list[1] != "pr" || list[2] != "print" {
+		t.Fail()
+		return
+	}
+}

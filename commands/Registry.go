@@ -13,12 +13,17 @@ type Commands struct {
 	m map[string]CommandInfo
 }
 
+//	Create new command registry
 func NewCommandRegistry() common.CommandRegistry {
 	return &Commands{
 		m: make(map[string]CommandInfo),
 	}
 }
 
+//	Adds command to registry
+//		commandName - Name of the command. Examples: "print" or "pr" etc
+//		moduleName  - Module name in which this command exists
+//		alias		- Real module function which will be called when command get used
 func (c *Commands) AddCommand(commandName, moduleName, alias string) error {
 	_, exist := c.m[commandName]
 	if exist {
@@ -45,6 +50,14 @@ func (c *Commands) GetCommandAlias(commandName string) string {
 
 func (c *Commands) GetCommandModuleName(commandName string) string {
 	return c.m[commandName].Module
+}
+
+func (c *Commands) CommandList() []string {
+	var list []string
+	for k, _ := range c.m {
+		list = append(list, k)
+	}
+	return list
 }
 
 func modCall(moduleName, funcName, args string) string {
