@@ -5,4 +5,4 @@ const wrappedModScript = "mods[\"@@\"] = (function(){\n" +
 	"\tfunction init(){\n@@\n}\n" +
 	"\tinit();\n" +
 	"\treturn mod;\n" +
-	"})();"
+	"})();\n"

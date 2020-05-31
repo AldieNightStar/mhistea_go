@@ -22,7 +22,7 @@ func (m modImpl) Config() string {
 	return string(m.folder.ReadFile("config.txt"))
 }
 
-func NewModule(folder _common.Folder, name string) (mod _common.Module, err error) {
+func NewModule(folder _common.ReadOnlyFolder, name string) (mod _common.Module, err error) {
 	if !folder.IsExists("mod.js") {
 		return nil, errors.New("mod.js is not present!")
 	}

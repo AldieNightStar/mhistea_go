@@ -7,14 +7,14 @@ func TestParse(t *testing.T) {
 	args := "Hello, World, Me of course"
 	cmd := "print"
 
-	command := Parse(line)
-	if command.CommandName != cmd || command.Arguments != args {
+	command, arguments := ParseCommandAndArguments(line)
+	if command != cmd || arguments != args {
 		t.Error("Did not parse correctly")
 	}
 }
 
 func TestParseTemplate(t *testing.T) {
-	template := "modules[\"...\"](...);"
+	template := "modules[\"@@\"](@@);"
 	required := "modules[\"core\"](1, 2, 3);"
 
 	actual := ParseTemplate(template, []string{"core", "1, 2, 3"})
@@ -24,7 +24,7 @@ func TestParseTemplate(t *testing.T) {
 }
 
 func TestParseTemplateCall(t *testing.T) {
-	template := "modules[\"...\"](...);"
+	template := "modules[\"@@\"](@@);"
 	required := "modules[\"core\"](1, 2, 3);"
 
 	actual := ParseTemplateCall(template, "core 1, 2, 3")
