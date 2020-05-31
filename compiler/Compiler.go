@@ -111,7 +111,7 @@ func CompileStory(templatesFolder _common.ReadOnlyFolder, modulesFolder, storyFo
 		templateText = string(templatesFolder.ReadFile(templateName + ".html"))
 	}
 
-	// Pack story output script into template
+	// Pack story output script to a template
 	var packedHTML string
 	{
 		html, err := Pack(templateText, outputScript)
@@ -121,7 +121,7 @@ func CompileStory(templatesFolder _common.ReadOnlyFolder, modulesFolder, storyFo
 		packedHTML = html
 	}
 
-	// Write PackedStory into file "index.html" inside folder
+	// Write PackedStory into file "index.html" inside the folder
 	{
 		const outputStoryHtmlFileName = "index.html"
 		exist := storyFolder.IsExists(outputStoryHtmlFileName)
@@ -144,22 +144,42 @@ func compileStoryText(storyText string, cmdRegistry _common.CommandRegistry) str
 	ParseTemplate := _common.Refs.Parser.ParseTemplate
 
 	builder := strings.Builder{}
+	firstSection := ""
 
 	sections := SectionReader.GetSectionList(storyText)
 	for _, section := range sections {
+		if firstSection == "" {
+			firstSection = section
+		}
 		parsedSection := compileSectionText(SectionReader.GetSectionByName(storyText, section), cmdRegistry)
 		parsedSection = ParseTemplate(sectionFunctionWrapper, []string{section, parsedSection})
 		builder.WriteString(parsedSection)
 	}
-
+	if firstSection != "" {
+		builder.WriteString(ParseTemplate(startFirstSceneDefinition, []string{firstSection, firstSection}))
+	}
 	return builder.String()
 }
 
-func compileSectionText(storyText string, cmdRegistry _common.CommandRegistry) string {
+func compileSectionText(sectionText string, cmdRegistry _common.CommandRegistry) string {
+	subTexts := _common.Refs.Subtext.ReadSubtext(sectionText)
+	counter := Counter{}
+	builder := strings.Builder{}
+	for _, subText := range subTexts {
+		subTextNumber := counter.String()
+		counter.Count()
+		compiled := compileSectionSubtext(subText, cmdRegistry)
+		wrapped := _common.Refs.Parser.ParseTemplate(subSceneFunctionWrapper, []string{subTextNumber, subTextNumber, compiled})
+		builder.WriteString(wrapped)
+	}
+	return builder.String()
+}
+
+func compileSectionSubtext(subText string, cmdRegistry _common.CommandRegistry) string {
 	SplitToLines := _common.Refs.Sections.SplitToLines
 	ParseCommandAndArguments := _common.Refs.Parser.ParseCommandAndArguments
 
-	storyTextLines := SplitToLines(storyText)
+	storyTextLines := SplitToLines(subText)
 	compiledStoryScript := strings.Builder{}
 	for _, storyTextLine := range storyTextLines {
 		// Skip empty lines and comments ("==")
