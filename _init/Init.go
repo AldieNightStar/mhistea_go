@@ -9,6 +9,7 @@ import (
 	"github.com/AldieNightStar/mhistea_go/parser"
 	"github.com/AldieNightStar/mhistea_go/sections"
 	"github.com/AldieNightStar/mhistea_go/story"
+	"github.com/AldieNightStar/mhistea_go/subtext"
 )
 
 func Init() {
@@ -32,4 +33,6 @@ func Init() {
 	_common.Refs.Module.NewModule = module.NewModule
 	_common.Refs.Module.ReadCommands = module.ReadCommands
 	_common.Refs.Module.ReadWrappedScript = module.ReadWrappedScript
+	// Subtext
+	_common.Refs.Subtext.ReadSubtext = subtext.ReadSubtext
 }

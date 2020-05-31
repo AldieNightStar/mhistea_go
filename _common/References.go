@@ -45,6 +45,10 @@ type RefStruct struct {
 		// from [module.ReadWrappedScript]
 		ReadWrappedScript func(mod Module) string
 	}
+	Subtext struct {
+		// from [subtext.ReadSubtext]
+		ReadSubtext func(text string) []string
+	}
 }
 
 var Refs = &RefStruct{}
